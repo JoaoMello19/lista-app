@@ -58,9 +58,7 @@ export async function deleteList(listId) {
 // FUNÇÕES QUE RETORNAM APENAS *UMA* LISTA
 
 async function __changeOneList(listId, updaterFunction) {
-    console.log(`__changeOneList(${listId}, ${updaterFunction})`);
     const { success, error, lists } = await __changeLists(updaterFunction);
-    console.log("Retornou ", JSON.stringify({ success, error, lists }));
     if (!success) return { success, error };
 
     const list = lists.find((list) => list.id === listId);

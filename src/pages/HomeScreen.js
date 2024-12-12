@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 import TopBanner from "../components/TopBanner";
 import { containerStyle } from "../global/styles";
 import DefaultForm from "../components/DefaultForm";
 import CardContainer from "../components/CardContainer";
 import { createList, deleteList, getLists } from "../../database/database";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }) {
     const [lists, setLists] = useState([]);
 
-    useEffect(() => {
+    useFocusEffect(() => {
         getLists().then(({ success, lists, error }) => {
             if (success) return setLists(lists);
             console.error(error);
         });
-    }, []);
+    });
 
     function onCardPress(list) {
-        console.log(`Banner clicked: ${JSON.stringify(list)}`);
         navigation.push("List", { list });
     }
 
@@ -41,7 +41,20 @@ export default function HomeScreen({ navigation }) {
             <TopBanner />
             <CardContainer
                 objects={lists}
-                getContent={(list) => list.name}
+                getContent={(list) => {
+                    const length = list.items.length;
+                    const text = length !== 1 ? "itens" : "item";
+                    return (
+                        <Text
+                            style={{
+                                fontSize: 16,
+                                fontWeight: "bold",
+                            }}
+                        >
+                            {`${list.name} (${length} ${text})`}
+                        </Text>
+                    );
+                }}
                 onCardPress={onCardPress}
                 onDeletePress={onDeletePress}
             />

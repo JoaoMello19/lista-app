@@ -11,9 +11,7 @@ function DefaultCard({ object, getContent, onCardPress, onDeletePress }) {
                     onCardPress(object);
                 }}
             >
-                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                    {getContent(object)}
-                </Text>
+                {getContent(object)}
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.iconContainer}
@@ -69,6 +67,10 @@ const styles = StyleSheet.create({
     },
     cardTouch: {
         flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 5,
+
         height: "100%",
         padding: 10,
         borderTopLeftRadius: 10,
